@@ -6,9 +6,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.ModifyArgs;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import org.spongepowered.asm.mixin.injection.invoke.arg.Args;
 
 @Mixin(TooltipBackgroundRenderer.class)
 public abstract class TooltipBackgroundRendererMixin {
@@ -18,7 +16,8 @@ public abstract class TooltipBackgroundRendererMixin {
 
     @Inject(method = "renderBorder(Lnet/minecraft/client/gui/DrawContext;IIIIIII)V",
     at = @At("HEAD"))
-    private static void renderBorder(DrawContext context, int x, int y, int width, int height, int z, int startColor, int endColor, CallbackInfo ci) {
-        renderVerticalLine(context, x + 35, y, height - 2, z, startColor, endColor);
+    private static void sweettooltips$injectTooltipVerticalLine(DrawContext context, int x, int y, int width, int height, int z, int startColor, int endColor, CallbackInfo ci) {
+        //System.out.println("x: " + x + ", y: " + y + ", width: "+width + ", height: "+height+", z: " + z);
+        //renderVerticalLine(context, x + 35, y, height - 2, z, startColor, endColor);
     }
 }

@@ -1,0 +1,41 @@
+{
+	"schemaVersion": 1,
+	"id": "sweettooltips",
+	"version": "${version}",
+	"name": "Sweet Tooltips",
+	"description": "This is an example description! Tell everyone what your mod is about!",
+	"authors": [
+		"Andrew6rant (Andrew Grant)"
+	],
+	"contact": {
+		"homepage": "https://fabricmc.net/",
+		"sources": "https://github.com/FabricMC/fabric-example-mod"
+	},
+	"license": "CC0-1.0",
+	"icon": "assets/sweettooltips/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+          "io.github.andrew6rant.sweettooltips.SweetTooltips"
+		],
+		"client": [
+			"io.github.andrew6rant.sweettooltips.SweetTooltipsClient"
+		]
+	},
+	"mixins": [
+		"sweettooltips.mixins.json",
+		{
+			"config": "sweettooltips.client.mixins.json",
+			"environment": "client"
+		}
+	],
+	"depends": {
+		"fabricloader": ">=0.14.22",
+		"minecraft": "~1.20.1",
+		"java": ">=17",
+		"fabric-api": "*"
+	},
+	"suggests": {
+		"another-mod": "*"
+	}
+}

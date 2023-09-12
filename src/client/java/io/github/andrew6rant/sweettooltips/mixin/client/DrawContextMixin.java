@@ -43,7 +43,10 @@ public abstract class DrawContextMixin {
         if (currentScreen != null && currentScreen instanceof HandledScreen<?> handledScreen) {
             Slot focusedSlot = ((HandledScreenAccessor)handledScreen).getFocusedSlot();
             if (focusedSlot != null) {
-                durabilityrender$savedFocusedStack = focusedSlot.getStack();
+                ItemStack focusedStack = focusedSlot.getStack();
+                if (!focusedStack.isEmpty()) {
+                    durabilityrender$savedFocusedStack = focusedSlot.getStack();
+                }
             }
         }
     }
@@ -102,11 +105,11 @@ public abstract class DrawContextMixin {
 
     @Inject(method = "method_51743(IIII)V",
             at = @At(value = "INVOKE",
-                    target = "Lnet/minecraft/client/gui/tooltip/TooltipBackgroundRenderer;render(Lnet/minecraft/client/gui/DrawContext;IIIII)V"
-            ))
+                    target = "Lnet/minecraft/client/gui/tooltip/TooltipBackgroundRenderer;render(Lnet/minecraft/client/gui/DrawContext;IIIII)V",
+                    shift = At.Shift.AFTER))
     private void sweettooltips$injectVerticalTooltipLine(int x, int y, int width, int height, CallbackInfo ci) {
         if (durabilityrender$savedFocusedStack != null) {
-            this.fillGradient(x + 32, y-2, x + 33, y + Math.max(height+2, 32), 402, 1347420415, 1344798847); // ColorHelper.Abgr.toOpaque()
+            this.fillGradient(x + 32, y-2, x + 33, y + Math.max(height+2, 32), 200, 1347420415, 1344798847);
         }
     }
 }

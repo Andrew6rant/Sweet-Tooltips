@@ -18,7 +18,7 @@ public class OrderedTextTooltipComponentMixin {
         if (true) { // this'll be a config option later
             if (this.text.equals(OrderedText.EMPTY)) {
                 cir.setReturnValue(0);
-            } else
+            } else {
                 cir.setReturnValue(10);
             }
         }

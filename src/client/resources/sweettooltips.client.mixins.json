@@ -5,6 +5,7 @@
   "client": [
     "DrawContextMixin",
     "HandledScreenAccessor",
+    "HoveredTooltipPositionerMixin",
     "OrderedTextTooltipComponentMixin",
     "TooltipBackgroundRendererMixin",
     "TooltipComponentMixin"

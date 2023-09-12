@@ -15,8 +15,12 @@ public class OrderedTextTooltipComponentMixin {
 
     @Inject(method = "getHeight()I", at = @At(value = "HEAD"), cancellable = true)
     private void sweettooltips$changeEmptyTextTooltipComponentHeight(CallbackInfoReturnable<Integer> cir) {
-        if (this.text.equals(OrderedText.EMPTY)) {
-            cir.setReturnValue(0);
+        if (true) { // this'll be a config option later
+            if (this.text.equals(OrderedText.EMPTY)) {
+                cir.setReturnValue(0);
+            } else
+                cir.setReturnValue(10);
+            }
         }
     }
 }

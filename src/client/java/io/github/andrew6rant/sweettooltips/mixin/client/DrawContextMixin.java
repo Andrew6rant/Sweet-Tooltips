@@ -14,9 +14,7 @@ import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.ModifyArg;
+import org.spongepowered.asm.mixin.injection.*;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.util.List;
@@ -61,12 +59,12 @@ public abstract class DrawContextMixin {
             at = @At(value = "TAIL", shift = At.Shift.BEFORE))
     private void sweettooltips$drawItems(TextRenderer textRenderer, List<TooltipComponent> components, int x, int y, TooltipPositioner positioner, CallbackInfo ci) {
         if (durabilityrender$savedFocusedStack != null) {
-            this.matrices.push();
-            this.matrices.translate(x +11, y - 13, 256.0F); // needs to be this high to render blockItems
+            /*this.matrices.push();
+            this.matrices.translate(x +10, y - 14, 256.0F); // needs to be this high to render blockItems
             this.matrices.scale(2f, 2f, 1);
             this.drawItem(durabilityrender$savedFocusedStack, 0, 0);
-            this.drawItemInSlot(textRenderer, durabilityrender$savedFocusedStack, 0, 0); // use the count override one with "" to remove item count
-            this.matrices.pop();
+            //this.drawItemInSlot(textRenderer, durabilityrender$savedFocusedStack, 0, 0); // use the count override one with "" to remove item count
+            this.matrices.pop();*/
         }
     }
 
@@ -77,7 +75,7 @@ public abstract class DrawContextMixin {
             index = 1)
     private int sweettooltips$modifyTextX(int n) {
         if (durabilityrender$savedFocusedStack != null) {
-            return n+34;
+            return n+33;
         } return n;
     }
 
@@ -88,7 +86,7 @@ public abstract class DrawContextMixin {
             index = 3)
     private int sweettooltips$modifyTooltipBackgroundWidth(int width) {
         if (durabilityrender$savedFocusedStack != null) {
-            return width+34;
+            return width+33;
         } return width;
     }
 
@@ -99,7 +97,9 @@ public abstract class DrawContextMixin {
             index = 4)
     private int sweettooltips$modifyTooltipBackgroundHeight(int height) {
         if (durabilityrender$savedFocusedStack != null) {
-            return Math.max(height, 30);
+            //System.out.println(height);
+            height = height - 2;
+            return Math.max(height, 28);
         } return height;
     }
 
@@ -109,7 +109,22 @@ public abstract class DrawContextMixin {
                     shift = At.Shift.AFTER))
     private void sweettooltips$injectVerticalTooltipLine(int x, int y, int width, int height, CallbackInfo ci) {
         if (durabilityrender$savedFocusedStack != null) {
-            this.fillGradient(x + 32, y-2, x + 33, y + Math.max(height+2, 32), 200, 1347420415, 1344798847);
+            this.matrices.push();
+            this.matrices.translate(x-2, y-2, 256.0F); // needs to be this high to render blockItems
+            this.matrices.scale(2f, 2f, 1);
+            this.drawItem(durabilityrender$savedFocusedStack, 0, 0);
+            //this.drawItemInSlot(textRenderer, durabilityrender$savedFocusedStack, 0, 0); // use the count override one with "" to remove item count
+            this.matrices.pop();
+            this.fillGradient(x + 30, y-2, x + 31, y + 30, 400, 1347420415, 1344798847);
+            if (height > 30) {
+                this.fillGradient(x-2, y+30, x + 31, y + 31, 400, 1347420415, 1344798847);
+            }
         }
+    }
+
+    @ModifyConstant(method = "drawTooltip(Lnet/minecraft/client/font/TextRenderer;Ljava/util/List;IILnet/minecraft/client/gui/tooltip/TooltipPositioner;)V",
+    constant = @Constant(intValue = 2))
+    private int sweettooltips$modifyTooltipTitleHeight(int x) {
+        return 1;
     }
 }
